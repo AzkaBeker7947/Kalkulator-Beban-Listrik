@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kalkulator Beban Listrik — Web</title>
+
+  <!-- Google font + icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS external -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- SheetJS -->
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">EL</div>
+        <div class="title">
+          <h1>Kalkulator Beban Listrik</h1>
+          <p>Hitung pemakaian listrik harian, bulanan, tahunan & ekspor Excel</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="muted" style="font-size:13px">Harga per kWh (Rp)</div>
+        <input id="harga" type="number" placeholder="Rp / kWh" style="width:160px;padding:10px 12px;border-radius:10px;border:1px solid #e6eef9">
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- LEFT: FORM -->
+      <section class="card">
+        <h3 style="margin:0 0 14px">Tambah Perangkat</h3>
+        <div class="form-grid">
+          <div>
+            <label for="nama">Nama Barang</label>
+            <input id="nama" type="text" placeholder="Contoh: Kulkas" />
+          </div>
+          <div>
+            <label for="jumlah">Jumlah</label>
+            <input id="jumlah" type="number" min="1" value="1" />
+          </div>
+
+          <div>
+            <label for="watt">Daya (Watt)</label>
+            <input id="watt" type="number" min="0" step="0.1" placeholder="Contoh: 150" />
+          </div>
+          <div>
+            <label for="jam">Jam Pemakaian / hari</label>
+            <input id="jam" type="number" min="0" step="0.1" placeholder="Contoh: 8" />
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn" id="btn-tambah"><i class="fa fa-plus" style="margin-right:8px"></i> Tambah</button>
+          <button class="ghost small" id="btn-reset">Reset Form</button>
+          <div style="margin-left:auto;display:flex;gap:10px">
+            <button class="ghost small" id="btn-hapus-selected"><i class="fa fa-trash"></i> Hapus Terpilih</button>
+            <button class="btn small" id="btn-export"><i class="fa fa-file-excel" style="margin-right:8px"></i>Export Excel</button>
+          </div>
+        </div>
+
+        <p class="note">Navigasi cepat: tekan Enter untuk berpindah antar field, Enter pada "Jumlah" untuk menambah. Perhitungan total hanya akan dilakukan saat menekan tombol <strong>HITUNG TOTAL</strong>.</p>
+      </section>
+
+      <!-- RIGHT: TABLE -->
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="min-width:220px">
+            <h3 style="margin:0 0 6px">Daftar Perangkat</h3>
+            <div class="muted">Klik dua kali untuk edit</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <label class="muted" style="margin-right:6px">Days / bulan</label>
+            <input id="daysPerMonth" type="number" min="1" value="30" style="width:80px;padding:10px;border-radius:8px;border:1px solid #e6eef9">
+            <button class="btn small" id="btn-calc">HITUNG TOTAL</button>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:12px">
+          <table id="tbl">
+            <thead>
+              <tr>
+                <th style="width:36px"><input id="selectAll" type="checkbox"></th>
+                <th style="width:36px">No</th>
+                <th>Barang</th>
+                <th class="col-center">Watt</th>
+                <th class="col-center">Jam/hari</th>
+                <th class="col-center">Jumlah</th>
+                <th class="col-num">Wh/hari</th>
+                <th class="col-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="totals">
+          <div class="tot-card"><h4>Total Pemakaian (per hari)</h4><p id="totalWh">0 Wh</p></div>
+          <div class="tot-card"><h4>Total (kWh / hari)</h4><p id="totalkWh">0.000 kWh</p></div>
+          <div class="tot-card"><h4>Biaya Harian</h4><p id="costDaily">Rp 0</p></div>
+          <div class="tot-card"><h4>Biaya Bulanan</h4><p id="costMonthly">Rp 0</p></div>
+          <div class="tot-card"><h4>Biaya Tahunan</h4><p id="costYearly">Rp 0</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- JS external -->
+  <script src="app.js"></script>
+</body>
+</html>
