@@ -32,15 +32,13 @@ header.app-header{
 }
 .brand{
   display:flex;
-  gap:16px;
+  gap:9px;
   align-items:center;
 }
-.logo{
-  width:62px;height:62px;border-radius:12px;
-  background:linear-gradient(135deg,var(--accent),#1b66d3);
-  display:flex;align-items:center;justify-content:center;color:white;font-weight:800;
-  box-shadow: 0 8px 22px rgba(47,128,237,0.16);
-  font-size:20px;
+.logo img {
+  width: 70px;
+  height: auto;
+  display: block;
 }
 .title{line-height:1}
 .title h1{margin:0;font-size:20px}
